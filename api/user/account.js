@@ -4,13 +4,12 @@ const config = require('../../config/config')
 
 router.get('/user/account', (req, res) => {
 	
-	if (!req.headers.authorization) {
-		res.status(400).json({ message: 'Invalid params' })
+	if (!req.body.token) {
+		res.status(400).json({ message: 'Invalid token' })
 		return
 	}
 	
-	const token = req.headers.authorization.substr(7)
-	const query = '?token=' + token
+	const query = '?token=' + req.body.token
 	
     axios.get(`${config.apiUrl}/user${query}`)
         .then((response) => {
