@@ -23,10 +23,8 @@ const server = app.listen(process.env.PORT || 3000, () => {
 })
 
 function tokenToBody (req, res, next) {
-	
 	if (req.headers.authorization) {
 		req.body.token = req.headers.authorization.split(' ')[1]
 	}
-	
 	next()
 }

@@ -2,22 +2,21 @@ const axios = require('axios')
 const router = require('express').Router()
 const config = require('../../config/config')
 
-router.post('/auth/login', (req, res) => {
+router.put('/user/change', (req, res) => {
 	
-	if (!req.body.username || !req.body.password) {
-		res.status(401).json({ message: 'Bad credentials' })
+	if (!req.body.token) {
+		res.status(400).json({ message: 'Invalid token' })
 		return
 	}
 	
-	const query = '?username=' + req.body.username + '&password=' + req.body.password
-    axios.get(`${config.apiUrl}/auth${query}`)
+    axios.put(`${config.apiUrl}/user/`, req.body)
         .then((response) => {
 			res.status(response.status).json(response.data)
         })
         .catch((error) => {
+			console.log('Error: ' + error)
 			res.status(error.response.status).json({ message: error.response.statusText })
         })
-
 })
 
 module.exports = router
